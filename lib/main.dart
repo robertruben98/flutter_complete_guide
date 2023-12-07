@@ -44,11 +44,15 @@ class _MyAppState extends State {
 
     void _answerQuestion() {
       setState(() {
-        if (_questionIndex < questions.length - 1) {
+        if (_questionIndex < questions.length) {
           _questionIndex = _questionIndex + 1;
-        } else {
-          _questionIndex = 0;
         }
+      });
+    }
+
+    void _goBack() {
+      setState(() {
+        _questionIndex = 0;
       });
     }
 
@@ -57,14 +61,23 @@ class _MyAppState extends State {
           appBar: AppBar(
             title: Text(this.title),
           ),
-          body: Column(
-            children: [
-              Question(questions[_questionIndex]['title'] as String),
-              ...(questions[_questionIndex]['answers'] as List<String>)
-                  .map((answer) => Answer(answer, _answerQuestion))
-                  .toList()
-            ],
-          )),
+          body: _questionIndex < questions.length
+              ? Column(
+                  children: [
+                    Question(questions[_questionIndex]['title'] as String),
+                    ...(questions[_questionIndex]['answers'] as List<String>)
+                        .map((answer) => Answer(answer, _answerQuestion))
+                        .toList()
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    children: [
+                      Text("You did it!"),
+                      ElevatedButton(onPressed: _goBack, child: Text("Go Back"))
+                    ],
+                  ),
+                )),
     );
   }
 }
