@@ -6,29 +6,27 @@ class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new MyAppState();
+    return new _MyAppState();
   }
 }
 
-class MyAppState extends State{
+class _MyAppState extends State {
   String title = "APK para jenny";
-  var questionIndex = 0;
+  var _questionIndex = 0;
   var questions = ["Naruto", "Meliodas", "Goku"];
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      if (questionIndex < questions.length - 1) {
-        questionIndex = questionIndex + 1;
+      if (_questionIndex < questions.length - 1) {
+        _questionIndex = _questionIndex + 1;
       } else {
-        questionIndex = 0;
+        _questionIndex = 0;
       }
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -36,12 +34,9 @@ class MyAppState extends State{
           ),
           body: Row(
             children: [
-              Text(
-                questions[questionIndex]
-              ),
+              Text(questions[_questionIndex]),
               ElevatedButton(
-                  onPressed: answerQuestion,
-                  child: Text("Answer 1")),
+                  onPressed: _answerQuestion, child: Text("Answer 1")),
               // ElevatedButton(
               //     onPressed: answerQuestion,
               //     child: Text("Select 2")),
