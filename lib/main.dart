@@ -1,8 +1,8 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/answer.dart';
-import 'package:flutter_complete_guide/question.dart';
+import 'package:flutter_complete_guide/quiz.dart';
+import 'package:flutter_complete_guide/result.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,62 +22,52 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State {
   final String title = "APK para jenny";
+
+  // const build time is a runtime constant
+  final _questions = const [
+    {
+      'title': "What's your favorite color?",
+      'answers': [
+        "Blue",
+        "Black",
+        "White",
+      ]
+    },
+    {
+      'title': "What's your favorite animal?",
+      'answers': ["Lion", "Dolphin", "Tiger"]
+    },
+  ];
   var _questionIndex = 0;
+
+  void _answerQuestion() {
+    setState(() {
+      if (_questionIndex < _questions.length) {
+        _questionIndex = _questionIndex + 1;
+      }
+    });
+  }
+
+  void _goBack() {
+    setState(() {
+      _questionIndex = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // const build time is a runtime constant
-    const questions = [
-      {
-        'title': "What's your favorite color?",
-        'answers': [
-          "Blue",
-          "Black",
-          "White",
-        ]
-      },
-      {
-        'title': "What's your favorite animal?",
-        'answers': ["Lion", "Dolphin", "Tiger"]
-      },
-    ];
-
-    void _answerQuestion() {
-      setState(() {
-        if (_questionIndex < questions.length) {
-          _questionIndex = _questionIndex + 1;
-        }
-      });
-    }
-
-    void _goBack() {
-      setState(() {
-        _questionIndex = 0;
-      });
-    }
-
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
             title: Text(this.title),
           ),
-          body: _questionIndex < questions.length
-              ? Column(
-                  children: [
-                    Question(questions[_questionIndex]['title'] as String),
-                    ...(questions[_questionIndex]['answers'] as List<String>)
-                        .map((answer) => Answer(answer, _answerQuestion))
-                        .toList()
-                  ],
+          body: _questionIndex < _questions.length
+              ? Quiz(
+                  answerQuestion: _answerQuestion,
+                  questionIndex: _questionIndex,
+                  questions: _questions,
                 )
-              : Center(
-                  child: Column(
-                    children: [
-                      Text("You did it!"),
-                      ElevatedButton(onPressed: _goBack, child: Text("Go Back"))
-                    ],
-                  ),
-                )),
+              : Result(goBack: _goBack))
     );
   }
 }
