@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_complete_guide/question.dart';
+import 'package:flutter_complete_guide/apps/quiz/question.dart';
 import 'answer.dart';
 
 class Quiz extends StatelessWidget {
