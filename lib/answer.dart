@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Answer extends StatelessWidget {
-  final String title;
   final VoidCallback selectHandler;
+  final String title;
 
-  Answer(this.title, this.selectHandler);
+  Answer(this.selectHandler, this.title);
 
   @override
   Widget build(BuildContext context) {
