@@ -74,8 +74,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     Expanded(
                       child: Text(_selectedDate == null
                           ? "No date choice!"
-                          : "Picked Date: ${DateFormat.yMMMd().format(_selectedDate!)}"
-                      ),
+                          : "Picked Date: ${DateFormat.yMMMd().format(_selectedDate!)}"),
                     ),
                     TextButton(
                         onPressed: _presentDatePicker,

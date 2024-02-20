@@ -5,13 +5,14 @@ import '../models/transactions.dart';
 
 class TransactionListWidget extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String id) removeTransaction;
 
-  TransactionListWidget(this.transactions);
+  TransactionListWidget(this.transactions, this.removeTransaction);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 400,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -33,17 +34,20 @@ class TransactionListWidget extends StatelessWidget {
                   elevation: 5,
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: Padding(
-                          padding: EdgeInsets.all(6),
-                          child: FittedBox(child: Text("\$${tx.amount}"))),
-                    ),
-                    title: Text(tx.title,
-                        style: Theme.of(context).textTheme.headline6),
-                    subtitle: Text(DateFormat.yMMMd().format(tx.date)),
-
-                  ),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                            padding: EdgeInsets.all(6),
+                            child: FittedBox(child: Text("\$${tx.amount}"))),
+                      ),
+                      title: Text(tx.title,
+                          style: Theme.of(context).textTheme.headline6),
+                      subtitle: Text(DateFormat.yMMMd().format(tx.date)),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
+                        onPressed: () {this.removeTransaction(tx.id);},
+                      )),
                 );
               },
               itemCount: transactions.length),
