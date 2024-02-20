@@ -39,7 +39,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [];
+  final List<Transaction> _userTransactions = [
+    Transaction(
+        id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: 't2',
+        title: 'Weekly Groceries',
+        amount: 16.53,
+        date: DateTime.now()),
+    Transaction(id: 't3', title: 'Product 1', amount: 191.99, date: DateTime.now()),
+    Transaction(id: 't4', title: 'Product 2', amount: 192.99, date: DateTime.now()),
+    Transaction(id: 't5', title: 'Product 3', amount: 193.99, date: DateTime.now()),
+    Transaction(id: 't6', title: 'Product 4', amount: 194.99, date: DateTime.now()),
+    Transaction(id: 't7', title: 'Product 4', amount: 195.99, date: DateTime.now()),
+    Transaction(id: 't8', title: 'Product 6', amount: 196.99, date: DateTime.now()),
+  ];
 
   List<Transaction> get _recentTransactions {
     return _userTransactions
@@ -79,23 +93,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Personal Expenses'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(this.context),
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(this.context),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionListWidget(_userTransactions, removeTransaction)
+            Container(height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.3, child: Chart(_recentTransactions)),
+            Container(height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7, child: TransactionListWidget(_userTransactions, removeTransaction))
           ],
         ),
       ),
